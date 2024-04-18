@@ -1,0 +1,6 @@
+rootProject.name = 'temporal-work'
+
+includeBuild 'temporal-api'
+includeBuild 'fabric8'
+includeBuild 'worker-pods'
+

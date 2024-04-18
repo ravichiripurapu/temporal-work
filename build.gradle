@@ -1,0 +1,11 @@
+plugins {
+	id 'idea'
+	id 'eclipse'
+	id 'java'
+}
+
+tasks.register('compileJavaAll') {
+	dependsOn gradle.includedBuild('temporal-api').task(':compileJava')
+	dependsOn gradle.includedBuild('worker-pods').task(':compileJava')
+	dependsOn gradle.includedBuild('fabric8').task(':compileJava')
+}

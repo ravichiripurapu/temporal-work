@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+    id 'eclipse'
+    id 'application'
+}
+
+group = 'com.example.workers'
+archivesBaseName = 'worker-pods'
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Logging
+    implementation 'org.slf4j:slf4j-api:2.0.12' // SLF4J API
+
+    implementation 'ch.qos.logback:logback-classic:1.4.14' // Logback Classic (API + Implementation)
+    implementation 'ch.qos.logback:logback-core:1.4.14' // Logback Core (Implementation)
+
+
+    // Apache Commons
+    implementation 'commons-io:commons-io:2.7'
+
+    // MinIO Client
+    implementation 'io.minio:minio:8.5.9'
+
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+// build.gradle
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes(
+                'Main-Class': 'com.example.worker.pods.Main' // Replace com.example.MainClass with your actual main class
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    } {
+        exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+    }
+}
+
+
+test {
+    useJUnitPlatform()
+}

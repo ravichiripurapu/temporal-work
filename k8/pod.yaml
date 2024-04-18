@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: docker-file-processor-pod
+spec:
+  restartPolicy: Never
+  containers:
+    - name: docker-file-processor-container
+      image: flodaio/k8-file-processor:latest
+      volumeMounts:
+        - name: input-data-volume
+          mountPath: /tmp/docker/input
+        - name: output-data-volume
+          mountPath: /tmp/docker/output
+      env:
+        - name: input-file-path
+          value: "/path/to/input-file"
+        - name: output-file-path
+          value: "/tmp/docker/output/output-file"
+  volumes:
+    - name: input-data-volume
+      emptyDir: {}
+    - name: output-data-volume
+      emptyDir: {}
+
